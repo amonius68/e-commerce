@@ -24,9 +24,8 @@ export default function CartContextProvider(props) {
     async function addToCart(productId) {
         return await axios.post("https://ecommerce.routemisr.com/api/v1/cart", {
             productId
-        }, {
-            headers,
-        }).then((response) => {
+        }, { headers })
+        .then((response) => {
             toast.success(response.data.message);
             return handleCartUpdate(response);
         }).catch((err) => {
@@ -36,20 +35,17 @@ export default function CartContextProvider(props) {
     }
 
     async function getCart() {
-        return await axios.get("https://ecommerce.routemisr.com/api/v1/cart", {
-            headers,
-        }).then((response) => {
-            return handleCartUpdate(response);
-        }).catch((err) => {
+        return await axios.get("https://ecommerce.routemisr.com/api/v1/cart", { headers })
+        .then((response) => handleCartUpdate(response))
+        .catch((err) => {
             toast.error(err.response?.data?.message || "An error occurred");
             return err;
         });
     }
 
     async function removeCartItem(productId) {
-        return await axios.delete(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`, {
-            headers,
-        }).then((response) => {
+        return await axios.delete(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`, { headers })
+        .then((response) => {
             toast.success("Item removed from cart");
             return handleCartUpdate(response);
         }).catch((err) => {
@@ -59,11 +55,8 @@ export default function CartContextProvider(props) {
     }
 
     async function updateProduct(productId, count) {
-        return await axios.put(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`, {
-            count,
-        }, {
-            headers,
-        }).then((response) => {
+        return await axios.put(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`, { count }, { headers })
+        .then((response) => {
             toast.success("Cart updated");
             return handleCartUpdate(response);
         }).catch((err) => {
@@ -72,12 +65,13 @@ export default function CartContextProvider(props) {
         });
     }
 
+    // ✅ Online Payment
     async function onlinePayment(shippingAddress) {
-        return await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=http://localhost:5173`, {
-            shippingAddress,
-        }, {
-            headers,
-        }).then((response) => {
+        return await axios.post(
+            `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=http://localhost:5173/e-commerce`,
+            { shippingAddress },
+            { headers }
+        ).then((response) => {
             window.location.href = response.data.session.url;
             return response;
         }).catch((err) => {
@@ -86,13 +80,14 @@ export default function CartContextProvider(props) {
         });
     }
 
+    // ✅ Cash Payment
     async function cashPayment(shippingAddress) {
-        return await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/${cartId}`, {
-            shippingAddress,
-        }, {
-            headers,
-        }).then((response) => {
-            window.location.href = "http://localhost:5173/allorders";
+        return await axios.post(
+            `https://ecommerce.routemisr.com/api/v1/orders/${cartId}`,
+            { shippingAddress },
+            { headers }
+        ).then((response) => {
+            window.location.href = "http://localhost:5173/e-commerce/allorders";
             return response;
         }).catch((err) => {
             toast.error(err.response?.data?.message || "An error occurred");
@@ -101,9 +96,8 @@ export default function CartContextProvider(props) {
     }
 
     async function clearCart() {
-        return await axios.delete(`https://ecommerce.routemisr.com/api/v1/cart`, {
-            headers,
-        }).then((response) => {
+        return await axios.delete(`https://ecommerce.routemisr.com/api/v1/cart`, { headers })
+        .then((response) => {
             setNoOfCartItems(0);
             setTotalCartPrice(0);
             toast.success("Cart cleared");
@@ -115,7 +109,17 @@ export default function CartContextProvider(props) {
     }
 
     return (
-        <CartContext.Provider value={{ addToCart, cashPayment, getCart, removeCartItem, updateProduct, clearCart, noOfCartItems, totalCartPrice, onlinePayment }}>
+        <CartContext.Provider value={{
+            addToCart,
+            cashPayment,
+            getCart,
+            removeCartItem,
+            updateProduct,
+            clearCart,
+            noOfCartItems,
+            totalCartPrice,
+            onlinePayment
+        }}>
             {props.children}
         </CartContext.Provider>
     );
