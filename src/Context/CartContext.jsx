@@ -65,7 +65,6 @@ export default function CartContextProvider(props) {
         });
     }
 
-    // ✅ Online Payment
     async function onlinePayment(shippingAddress) {
         return await axios.post(
             `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=http://localhost:5173/e-commerce`,
@@ -80,7 +79,7 @@ export default function CartContextProvider(props) {
         });
     }
 
-    // ✅ Cash Payment
+
     async function cashPayment(shippingAddress) {
         return await axios.post(
             `https://ecommerce.routemisr.com/api/v1/orders/${cartId}`,
@@ -94,6 +93,7 @@ export default function CartContextProvider(props) {
             return err;
         });
     }
+
 
     async function clearCart() {
         return await axios.delete(`https://ecommerce.routemisr.com/api/v1/cart`, { headers })
