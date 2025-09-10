@@ -21,9 +21,9 @@ import { Toaster } from 'react-hot-toast'
 import BrandDetails from './components/BrandDetails/BrandDetails'
 import AllOrders from './components/AllOrders/AllOrders'
 import Checkout from './components/Checkout/Checkout'
+import Confirmation from './components/Confirmation/Confirmation'
 import Wishlist from './components/Wishlist/Wishlist.jsx'
 import { Offline } from 'react-detect-offline'
-
 
 function App() {
   const queryClient = new QueryClient()
@@ -40,6 +40,7 @@ let routes = createHashRouter([
   { path:"allorders", element: <ProtectedRoutes><AllOrders/></ProtectedRoutes>},
   { path:"wishlist", element: <ProtectedRoutes><Wishlist/></ProtectedRoutes>},
   { path:"checkout", element: <ProtectedRoutes><Checkout/></ProtectedRoutes>},
+  { path:"confirmation", element: <ProtectedRoutes><Confirmation/></ProtectedRoutes>},
   { path:"productdetails/:id/:category", element: <ProtectedRoutes><ProductDetails/></ProtectedRoutes>},
   { path:"brandDetails/:id", element: <ProtectedRoutes><BrandDetails/></ProtectedRoutes>},
   { path:"*", element: <NotFound/>},
