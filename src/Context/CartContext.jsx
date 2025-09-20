@@ -65,34 +65,35 @@ export default function CartContextProvider(props) {
         });
     }
 
-    async function onlinePayment(shippingAddress) {
-        return await axios.post(
-            `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=http://localhost:5173/e-commerce`,
-            { shippingAddress },
-            { headers }
-        ).then((response) => {
-            window.location.href = response.data.session.url;
-            return response;
-        }).catch((err) => {
-            toast.error(err.response?.data?.message || "An error occurred");
-            return err;
-        });
-    }
+async function onlinePayment(shippingAddress) {
+  return await axios.post(
+      `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=http://localhost:5173/e-commerce`,
+      { shippingAddress },
+      { headers }
+  ).then((response) => {
+      // بدلاً من التحويل المباشر
+      toast.success("Online payment started");
+      return response;
+  }).catch((err) => {
+      toast.error(err.response?.data?.message || "An error occurred");
+      return err;
+  });
+}
 
+async function cashPayment(shippingAddress) {
+  return await axios.post(
+      `https://ecommerce.routemisr.com/api/v1/orders/${cartId}`,
+      { shippingAddress },
+      { headers }
+  ).then((response) => {
+      toast.success("Cash payment confirmed");
+      return response;
+  }).catch((err) => {
+      toast.error(err.response?.data?.message || "An error occurred");
+      return err;
+  });
+}
 
-    async function cashPayment(shippingAddress) {
-        return await axios.post(
-            `https://ecommerce.routemisr.com/api/v1/orders/${cartId}`,
-            { shippingAddress },
-            { headers }
-        ).then((response) => {
-            window.location.href = "http://localhost:5173/e-commerce/allorders";
-            return response;
-        }).catch((err) => {
-            toast.error(err.response?.data?.message || "An error occurred");
-            return err;
-        });
-    }
 
 
     async function clearCart() {

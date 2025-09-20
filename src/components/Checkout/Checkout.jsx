@@ -1,22 +1,31 @@
-import React, { useState , useContext , useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styles from "./Checkout.module.css";
 import { useFormik } from 'formik';
-import { CartContext } from "../../Context/CartContext"
+import { CartContext } from "../../Context/CartContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from 'react-helmet';
 
 export default function Checkout() {
-  let { onlinePayment , cashPayment } = useContext(CartContext);
+  let { onlinePayment, cashPayment, getCart, totalCartPrice } = useContext(CartContext);
   const [loading, setLoading] = useState(false); 
   const [paymentType, setPaymentType] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
 
   const navigate = useNavigate(); 
-
   let { state } = useLocation();
+
   useEffect(() => {
     setPaymentType(state?.type || "Select Payment Method");
-  }, [state]);
-  
+
+    // fetch cart items
+    async function fetchCart() {
+      let res = await getCart();
+      if (res?.data?.data?.products) {
+        setCartItems(res.data.data.products);
+      }
+    }
+    fetchCart();
+  }, [state, getCart]);
 
   let formik = useFormik({
     initialValues: {
@@ -26,25 +35,25 @@ export default function Checkout() {
     },
     onSubmit: async (values) => {
       setLoading(true);
-      await pay(values);
+      await pay(values); 
       setLoading(false);
 
       navigate("/confirmation", {
-          state: {
+        state: {
           order: {
-          details: values.details,
-          phone: values.phone,
-          city: values.city,
-          items: cartItems,
-          totalPrice: totalPrice,
+            details: values.details,
+            phone: values.phone,
+            city: values.city,
+            items: cartItems,
+            totalPrice: totalCartPrice,
           }
         }
       });
     }
   });
 
-  async function pay(values){
-    if(paymentType === "online Payment" ){
+  async function pay(values) {
+    if (paymentType === "online Payment") {
       await onlinePayment(values); 
     } else {
       await cashPayment(values);
