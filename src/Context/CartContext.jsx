@@ -71,7 +71,7 @@ async function onlinePayment(shippingAddress) {
       { shippingAddress },
       { headers }
   ).then((response) => {
-      // بدلاً من التحويل المباشر
+       window.location.href = response.data.session.url;
       toast.success("Online payment started");
       return response;
   }).catch((err) => {
@@ -81,12 +81,14 @@ async function onlinePayment(shippingAddress) {
 }
 
 async function cashPayment(shippingAddress) {
+  const redirectUrl = `${window.location.origin}/#/confirmation`;
   return await axios.post(
       `https://ecommerce.routemisr.com/api/v1/orders/${cartId}`,
       { shippingAddress },
       { headers }
   ).then((response) => {
       toast.success("Cash payment confirmed");
+      window.location.href = redirectUrl;
       return response;
   }).catch((err) => {
       toast.error(err.response?.data?.message || "An error occurred");
