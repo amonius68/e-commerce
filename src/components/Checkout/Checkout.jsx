@@ -17,7 +17,6 @@ export default function Checkout() {
   useEffect(() => {
     setPaymentType(state?.type || "Select Payment Method");
 
-    // fetch cart items
     async function fetchCart() {
       let res = await getCart();
       if (res?.data?.data?.products) {
