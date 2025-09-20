@@ -67,7 +67,7 @@ export default function CartContextProvider(props) {
 
 async function onlinePayment(shippingAddress) {
   return await axios.post(
-      `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=http://localhost:5173/e-commerce`,
+      `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${window.location.origin}/#/${"confirmation"}`,
       { shippingAddress },
       { headers }
   ).then((response) => {
