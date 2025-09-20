@@ -110,7 +110,7 @@ export default function Navbar() {
               <>
                 <li><NavLink onClick={() => setMenuOpen(false)} to="/" className="block py-2 px-3">Home</NavLink></li>
                 <li><NavLink onClick={() => setMenuOpen(false)} to="brands" className="block py-2 px-3">Brands</NavLink></li>
-                <li><NavLink onClick={() => setMenuOpen(false)} to="cat" className="block py-2 px-3">Categories</NavLink></li>
+                <li><NavLink onClick={() => setMenuOpen(false)} to="categories" className="block py-2 px-3">Categories</NavLink></li>
                 <li><NavLink onClick={() => setMenuOpen(false)} to="products" className="block py-2 px-3">Products</NavLink></li>
                 <li><NavLink onClick={() => setMenuOpen(false)} to="wishlist" className="block py-2 px-3">Wishlist</NavLink></li>
                 <li><NavLink onClick={() => setMenuOpen(false)} to="cart" className="block py-2 px-3">Cart</NavLink></li>
