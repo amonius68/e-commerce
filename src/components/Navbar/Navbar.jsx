@@ -13,9 +13,9 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    // جلب الكارت عند تغيّر التوكن أو عند تحميل الـ navbar
     if (typeof getCart === "function") getCart();
   }, [getCart, token]);
+
 
   function toggleMenu(e) {
     e.stopPropagation();
@@ -97,7 +97,7 @@ export default function Navbar() {
           <div className="hidden md:flex md:order-1 space-x-4">
             <NavLink to="/" className={({isActive}) => `text-gray-900 dark:text-white hover:text-green-700 ${isActive ? 'font-bold text-green-700' : ''}`}>Home</NavLink>
             <NavLink to="brands" className={({isActive}) => `text-gray-900 dark:text-white hover:text-green-700 ${isActive ? 'font-bold text-green-700' : ''}`}>Brands</NavLink>
-            <NavLink to="cat" className={({isActive}) => `text-gray-900 dark:text-white hover:text-green-700 ${isActive ? 'font-bold text-green-700' : ''}`}>Categories</NavLink>
+            <NavLink to="categories" className={({isActive}) => `text-gray-900 dark:text-white hover:text-green-700 ${isActive ? 'font-bold text-green-700' : ''}`}>Categories</NavLink>
             <NavLink to="products" className={({isActive}) => `text-gray-900 dark:text-white hover:text-green-700 ${isActive ? 'font-bold text-green-700' : ''}`}>Products</NavLink>
             <NavLink to="wishlist" className={({isActive}) => `text-gray-900 dark:text-white hover:text-green-700 ${isActive ? 'font-bold text-green-700' : ''}`}>Wishlist</NavLink>
             <NavLink to="cart" className={({isActive}) => `text-gray-900 dark:text-white hover:text-green-700 ${isActive ? 'font-bold text-green-700' : ''}`}>Cart</NavLink>

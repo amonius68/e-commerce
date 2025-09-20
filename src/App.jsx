@@ -29,12 +29,12 @@ function App() {
   const queryClient = new QueryClient()
 
 let routes = createHashRouter([
-{ path:"", element: <Layout/>, children:[
+{ path:"/", element: <Layout/>, children:[
   { index: true, element: <ProtectedRoutes><Home/></ProtectedRoutes>},
   { path:"products", element: <ProtectedRoutes><Products/></ProtectedRoutes>},
   { path:"brands", element: <ProtectedRoutes><Brands/></ProtectedRoutes>},
   { path: "cart", element: <ProtectedRoutes><Cart/></ProtectedRoutes>},
-  { path:"cat", element: <ProtectedRoutes><Categories/></ProtectedRoutes>},
+  { path:"categories", element: <ProtectedRoutes><Categories/></ProtectedRoutes>},
   { path:"login", element: <ProtectedAuth><Login/></ProtectedAuth>},
   { path:"register", element: <ProtectedAuth><Register/></ProtectedAuth>},
   { path:"allorders", element: <ProtectedRoutes><AllOrders/></ProtectedRoutes>},
